@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "Phishing Detector Extension",
+  "version": "0.1.0",
+  "description": "Detects potential phishing emails in Gmail using local ML.",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Scan Email"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://mail.google.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "linear_svc_model.onnx",
+        "tfidf_vocabulary.json",
+        "tfidf_idf_data.json",
+        "handcrafted_feature_names.json",
+        "selector_info.json",
+        "js/ort.min.js",
+        "js/ort-page-initializer.js",
+        "js/ort-wasm.wasm",
+        "js/ort-wasm-simd.wasm",
+        "js/ort-wasm-threaded.wasm",
+        "js/ort-wasm-simd-threaded.wasm"
+       ],
+      "matches": ["*://mail.google.com/*"]
+    }
+  ]
+}
